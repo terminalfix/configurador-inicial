@@ -1,0 +1,1 @@
+# equipos-escolares-R7-configurador-inicial
