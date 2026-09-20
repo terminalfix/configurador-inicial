@@ -167,7 +167,7 @@ Si el script no se ejecuta como administrador, mostrará un aviso y finalizará.
 ## Uso
 
 1. Descargar o clonar el repositorio.
-2. Ejecutar `configurador-region-7.bat`.
+2. Ejecutar `configurador-inicial.bat`.
 3. Seleccionar el tipo de institución.
 4. Ingresar el número de institución.
 5. Seleccionar el distrito.
