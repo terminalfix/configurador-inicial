@@ -183,6 +183,15 @@ Si el script no se ejecuta como administrador, mostrará un aviso y finalizará.
 El script desactiva la administración automática del archivo de paginación y configura:
 
 ```text
+Ram: 2048 MB
+Mínimo: 2048 MB
+Máximo: 4096 MB
+
+Ram: 4096 MB
+Mínimo: 4096 MB
+Máximo: 8192 MB
+
+Ram: 8192 MB
 Mínimo: 8192 MB
 Máximo: 16384 MB
 ```
