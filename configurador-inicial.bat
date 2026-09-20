@@ -1,243 +1,390 @@
-# TerminalFix - Configurador de Equipos Escolares
+```bat
+@echo off
+color 0A
+title Configurador de Equipos Escolares - Region Educativa 7
 
-Herramienta en Batch para Windows destinada a facilitar la **configuración y nomenclatura de equipos escolares**, desarrollada por **TerminalFix**.
+:: =====================================================
+:: CONFIGURADOR DE EQUIPOS ESCOLARES
+:: REGION EDUCATIVA 7 - PROVINCIA DE BUENOS AIRES
+::
+:: Distritos:
+:: SM  - San Martin
+:: TDF - Tres de Febrero
+:: H   - Hurlingham
+::
+:: Instituciones:
+:: J    - Jardin
+:: EP   - Primaria
+:: EES  - Secundaria
+:: EEST - Tecnica
+:: EEE  - Educacion Especial
+::
+:: Compatible con Windows 7, 8, 8.1 y 10
+:: =====================================================
 
-El script permite generar automáticamente el nombre de un equipo de acuerdo con la institución, distrito, tipo de equipamiento y número de equipo.
 
-> **Alcance actual:** Región Educativa 7 de la Provincia de Buenos Aires.
+:: =====================================================
+:: COMPROBAR PRIVILEGIOS DE ADMINISTRADOR
+:: =====================================================
 
----
+net session >nul 2>&1
 
-## Región Educativa 7
+if %errorlevel% neq 0 (
+    echo.
+    echo ============================================
+    echo       ERROR: SE REQUIEREN PRIVILEGIOS
+    echo             DE ADMINISTRADOR
+    echo ============================================
+    echo.
+    echo Ejecute este archivo como Administrador.
+    echo.
+    pause
+    exit /b
+)
 
-Esta versión contempla los siguientes distritos:
 
-| Código | Distrito        |
-| ------ | --------------- |
-| `SM`   | San Martín      |
-| `TDF`  | Tres de Febrero |
-| `H`    | Hurlingham      |
+:: =====================================================
+:: TIPO DE INSTITUCION
+:: =====================================================
 
-La nomenclatura utilizada en el script corresponde específicamente a estos distritos.
+:TIPO_INSTITUCION
 
-Para utilizar la herramienta en otras Regiones Educativas será necesario adaptar los distritos y sus códigos correspondientes.
+cls
 
----
+echo ============================================
+echo     CONFIGURADOR DE EQUIPOS ESCOLARES
+echo            REGION EDUCATIVA 7
+echo ============================================
+echo.
+echo TIPO DE INSTITUCION
+echo.
+echo 1 - Jardin
+echo 2 - Primaria
+echo 3 - Secundaria
+echo 4 - Tecnica
+echo 5 - Educacion Especial
+echo.
 
-## Instituciones
+set "PREFIJO="
+set /p TIPO=Seleccione opcion: 
 
-El script contempla cinco tipos de instituciones:
+if "%TIPO%"=="1" (
+    set "PREFIJO=J"
+    goto NUMERO_INSTITUCION
+)
 
-| Código | Institución                             |
-| ------ | --------------------------------------- |
-| `J`    | Jardín                                  |
-| `EP`   | Escuela Primaria                        |
-| `EES`  | Escuela Secundaria                      |
-| `EEST` | Escuela de Educación Secundaria Técnica |
-| `EEE`  | Escuela de Educación Especial           |
+if "%TIPO%"=="2" (
+    set "PREFIJO=EP"
+    goto NUMERO_INSTITUCION
+)
 
----
+if "%TIPO%"=="3" (
+    set "PREFIJO=EES"
+    goto NUMERO_INSTITUCION
+)
 
-## Tipos de equipamiento
+if "%TIPO%"=="4" (
+    set "PREFIJO=EEST"
+    goto NUMERO_INSTITUCION
+)
 
-### Jardín
+if "%TIPO%"=="5" (
+    set "PREFIJO=EEE"
+    goto NUMERO_INSTITUCION
+)
 
-* `AC` — Aprender Conectados
-* `PRI` — Prini
+echo.
+echo Opcion invalida.
+pause
+goto TIPO_INSTITUCION
 
-Ejemplos:
 
-```text
-J15-SM-AC01
-J15-SM-PRI01
+:: =====================================================
+:: NUMERO DE INSTITUCION
+:: =====================================================
+
+:NUMERO_INSTITUCION
+
+cls
+
+echo ============================================
+echo            NUMERO DE INSTITUCION
+echo ============================================
+echo.
+
+set "NUMERO="
+set /p NUMERO=Ingrese numero de institucion: 
+
+if not defined NUMERO (
+    echo.
+    echo Debe ingresar un numero de institucion.
+    pause
+    goto NUMERO_INSTITUCION
+)
+
+
+:: =====================================================
+:: DISTRITO
+:: =====================================================
+
+:DISTRITO
+
+cls
+
+echo ============================================
+echo               DISTRITO
+echo ============================================
+echo.
+echo 1 - San Martin
+echo 2 - Tres de Febrero
+echo 3 - Hurlingham
+echo.
+
+set "DISTRITO="
+set /p DIST=Seleccione opcion: 
+
+if "%DIST%"=="1" (
+    set "DISTRITO=SM"
+    goto TIPO_EQUIPO
+)
+
+if "%DIST%"=="2" (
+    set "DISTRITO=TDF"
+    goto TIPO_EQUIPO
+)
+
+if "%DIST%"=="3" (
+    set "DISTRITO=H"
+    goto TIPO_EQUIPO
+)
+
+echo.
+echo Opcion invalida.
+pause
+goto DISTRITO
+
+
+:: =====================================================
+:: TIPO DE EQUIPO
+:: =====================================================
+
+:TIPO_EQUIPO
+
+cls
+
+echo ============================================
+echo             TIPO DE EQUIPO
+echo ============================================
+echo.
+
+
+:: =====================================================
+:: JARDIN
+:: =====================================================
+
+if "%TIPO%"=="1" (
+    echo 1 - Aprender Conectados
+    echo 2 - Prini
+    echo.
+
+    set "SECTOR="
+    set /p AREA=Seleccione opcion: 
+
+    if "%AREA%"=="1" set "SECTOR=AC"
+    if "%AREA%"=="2" set "SECTOR=PRI"
+
+    if not defined SECTOR (
+        echo.
+        echo Opcion invalida.
+        pause
+        goto TIPO_EQUIPO
+    )
+
+    goto NUMERO_EQUIPO
+)
+
+
+:: =====================================================
+:: PRIMARIA
+:: =====================================================
+
+if "%TIPO%"=="2" (
+    echo 1 - PAD
+    echo 2 - ADM
+    echo.
+
+    set "SECTOR="
+    set /p AREA=Seleccione opcion: 
+
+    if "%AREA%"=="1" set "SECTOR=PAD"
+    if "%AREA%"=="2" set "SECTOR=ADM"
+
+    if not defined SECTOR (
+        echo.
+        echo Opcion invalida.
+        pause
+        goto TIPO_EQUIPO
+    )
+
+    goto NUMERO_EQUIPO
+)
+
+
+:: =====================================================
+:: SECUNDARIA / TECNICA / EDUCACION ESPECIAL
+:: =====================================================
+
+if "%TIPO%"=="3" goto EQUIPO_SECUNDARIA
+if "%TIPO%"=="4" goto EQUIPO_SECUNDARIA
+if "%TIPO%"=="5" goto EQUIPO_SECUNDARIA
+
+
+:EQUIPO_SECUNDARIA
+
+echo 1 - Conectar Igualdad
+echo 2 - Conectar Igualdad Bonaerense
+echo 3 - Juana Manso
+echo 4 - Aprender Conectados
+echo.
+
+set "SECTOR="
+set /p AREA=Seleccione opcion: 
+
+if "%AREA%"=="1" set "SECTOR=CI"
+if "%AREA%"=="2" set "SECTOR=CIB"
+if "%AREA%"=="3" set "SECTOR=JM"
+if "%AREA%"=="4" set "SECTOR=AC"
+
+if not defined SECTOR (
+    echo.
+    echo Opcion invalida.
+    pause
+    goto TIPO_EQUIPO
+)
+
+
+:: =====================================================
+:: NUMERO DE EQUIPO
+:: =====================================================
+
+:NUMERO_EQUIPO
+
+cls
+
+echo ============================================
+echo             NUMERO DE EQUIPO
+echo ============================================
+echo.
+echo Ejemplo: 01
+echo.
+
+set "PCNUM="
+set /p PCNUM=Ingrese numero de equipo: 
+
+if not defined PCNUM (
+    echo.
+    echo Debe ingresar un numero de equipo.
+    pause
+    goto NUMERO_EQUIPO
+)
+
+
+:: =====================================================
+:: GENERAR NOMBRE
+:: =====================================================
+
+set "NUEVO_NOMBRE=%PREFIJO%%NUMERO%-%DISTRITO%-%SECTOR%%PCNUM%"
+
+
+:: =====================================================
+:: MOSTRAR RESULTADO
+:: =====================================================
+
+cls
+
+echo ============================================
+echo             RESULTADO FINAL
+echo ============================================
+echo.
+echo Region educativa : 7
+echo Institucion      : %PREFIJO%%NUMERO%
+echo Distrito         : %DISTRITO%
+echo Tipo de equipo   : %SECTOR%%PCNUM%
+echo.
+echo Nombre actual    : %COMPUTERNAME%
+echo Nombre nuevo     : %NUEVO_NOMBRE%
+echo.
+echo ============================================
+echo.
+
+pause
+
+
+:: =====================================================
+:: CAMBIAR NOMBRE DEL EQUIPO
+:: =====================================================
+
+echo.
+echo Cambiando nombre del equipo...
+echo.
+
+wmic computersystem where name="%COMPUTERNAME%" call rename name="%NUEVO_NOMBRE%" >nul
+
+if %errorlevel% neq 0 (
+    echo ERROR: No se pudo cambiar el nombre del equipo.
+    echo.
+    pause
+    exit /b
+)
+
+echo Nombre cambiado correctamente.
+
+
+:: =====================================================
+:: CONFIGURAR MEMORIA VIRTUAL
+:: =====================================================
+
+echo.
+echo Configurando memoria virtual...
+echo.
+
+wmic computersystem where name="%COMPUTERNAME%" set AutomaticManagedPagefile=False >nul
+
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" ^
+/v PagingFiles /t REG_MULTI_SZ /d "C:\pagefile.sys 8192 16384" /f >nul
+
+if %errorlevel% neq 0 (
+    echo ERROR: No se pudo configurar la memoria virtual.
+    echo.
+    pause
+    exit /b
+)
+
+echo Memoria virtual configurada:
+echo.
+echo Minimo : 8192 MB
+echo Maximo : 16384 MB
+
+
+:: =====================================================
+:: FINAL
+:: =====================================================
+
+echo.
+echo ============================================
+echo       CONFIGURACION COMPLETADA
+echo ============================================
+echo.
+echo Nombre del equipo:
+echo %NUEVO_NOMBRE%
+echo.
+echo El equipo se reiniciara en 15 segundos.
+echo.
+echo Guarde su trabajo antes de continuar.
+echo ============================================
+echo.
+
+timeout /t 15 /nobreak >nul
+
+shutdown /r /t 0
 ```
-
-### Primaria
-
-* `PAD` — PAD
-* `ADM` — Administrativo
-
-Ejemplos:
-
-```text
-EP47-SM-PAD01
-EP47-SM-ADM01
-```
-
-### Secundaria
-
-* `CI` — Conectar Igualdad
-* `CIB` — Conectar Igualdad Bonaerense
-* `JM` — Juana Manso
-* `AC` — Aprender Conectados
-
-Ejemplos:
-
-```text
-EES43-SM-CI01
-EES43-SM-CIB01
-EES43-SM-JM01
-EES43-SM-AC01
-```
-
-### Técnica
-
-Las Escuelas de Educación Secundaria Técnica utilizan el mismo esquema de equipamiento que las escuelas secundarias.
-
-Ejemplos:
-
-```text
-EEST5-TDF-CI01
-EEST5-TDF-CIB01
-EEST5-TDF-JM01
-EEST5-TDF-AC01
-```
-
-### Educación Especial
-
-Las Escuelas de Educación Especial utilizan el mismo esquema de equipamiento contemplado para Secundaria y Técnica.
-
-Ejemplos:
-
-```text
-EEE12-H-CI01
-EEE12-H-CIB01
-EEE12-H-JM01
-EEE12-H-AC01
-```
-
----
-
-## Formato del nombre
-
-El nombre generado utiliza la siguiente estructura:
-
-```text
-INSTITUCION-DISTRITO-EQUIPO
-```
-
-Por ejemplo:
-
-```text
-EES43-SM-CIB02
-```
-
-corresponde a:
-
-* `EES` → Escuela de Educación Secundaria
-* `43` → número de institución
-* `SM` → San Martín
-* `CIB` → Conectar Igualdad Bonaerense
-* `02` → número de equipo
-
----
-
-## Características
-
-* Generación automática del nombre del equipo.
-* Selección del tipo de institución.
-* Selección del distrito.
-* Selección del tipo de equipamiento.
-* Numeración individual de equipos.
-* Comprobación de privilegios de administrador.
-* Cambio automático del nombre de Windows.
-* Configuración de memoria virtual.
-* Reinicio automático después de completar la configuración.
-* Compatible con equipos antiguos con Windows.
-
----
-
-## Requisitos
-
-El script está pensado principalmente para equipos escolares con:
-
-* Windows 7
-* Windows 8
-* Windows 8.1
-* Windows 10
-
-### Privilegios
-
-Debe ejecutarse con **permisos de Administrador**.
-
-Si el script no se ejecuta como administrador, mostrará un aviso y finalizará.
-
----
-
-## Uso
-
-1. Descargar o clonar el repositorio.
-2. Ejecutar `configurador-region-7.bat`.
-3. Seleccionar el tipo de institución.
-4. Ingresar el número de institución.
-5. Seleccionar el distrito.
-6. Seleccionar el tipo de equipamiento.
-7. Ingresar el número de equipo.
-8. Verificar el nombre generado.
-9. Confirmar y permitir que el equipo se reinicie.
-
----
-
-## Memoria virtual
-
-El script desactiva la administración automática del archivo de paginación y configura:
-
-```text
-Mínimo: 8192 MB
-Máximo: 16384 MB
-```
-
-utilizando:
-
-```text
-C:\pagefile.sys
-```
-
-Esta configuración está orientada principalmente a equipos escolares con recursos limitados.
-
----
-
-## Advertencia
-
-Este script modifica configuraciones del sistema, incluyendo:
-
-* Nombre del equipo.
-* Configuración del archivo de paginación.
-* Registro de Windows.
-* Reinicio del sistema.
-
-Se recomienda verificar los datos ingresados antes de continuar.
-
-El usuario es responsable de comprobar que la nomenclatura utilizada corresponda a los criterios de su institución o Región Educativa.
-
----
-
-## Alcance
-
-La versión actual fue desarrollada específicamente para la **Región Educativa 7 de la Provincia de Buenos Aires**.
-
-Los códigos de distrito incluidos son:
-
-```text
-SM
-TDF
-H
-```
-
-El proyecto puede ampliarse posteriormente para contemplar otras Regiones Educativas y sus respectivas nomenclaturas.
-
----
-
-## Autor
-
-**TerminalFix**
-
-Herramientas, scripts y documentación relacionados con administración de sistemas, software libre, infraestructura y soporte técnico.
-
----
-
-## Licencia
-
-Este proyecto se distribuye bajo la licencia **MIT**.
-
-Ver el archivo [LICENSE](LICENSE) para consultar el texto completo de la licencia.
