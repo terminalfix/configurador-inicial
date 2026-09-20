@@ -100,10 +100,10 @@ Las Escuelas de Educación Especial utilizan el mismo esquema de equipamiento co
 Ejemplos:
 
 ```text
-EEE12-H-CI01
-EEE12-H-CIB01
-EEE12-H-JM01
-EEE12-H-AC01
+EEE502-H-CI01
+EEE502-H-CIB01
+EEE502-H-JM01
+EEE502-H-AC01
 ```
 
 ---
@@ -143,7 +143,7 @@ corresponde a:
 * Cambio automático del nombre de Windows.
 * Configuración de memoria virtual.
 * Reinicio automático después de completar la configuración.
-* Compatible con equipos antiguos con Windows.
+* Diseñado para equipos escolares con diferentes niveles de recursos.
 
 ---
 
@@ -180,21 +180,13 @@ Si el script no se ejecuta como administrador, mostrará un aviso y finalizará.
 
 ## Memoria virtual
 
-El script desactiva la administración automática del archivo de paginación y configura:
+El script desactiva la administración automática del archivo de paginación y configura diferentes valores según la cantidad de memoria RAM detectada:
 
-```text
-Ram: 2048 MB
-Mínimo: 2048 MB
-Máximo: 4096 MB
-
-Ram: 4096 MB
-Mínimo: 4096 MB
-Máximo: 8192 MB
-
-Ram: 8192 MB
-Mínimo: 8192 MB
-Máximo: 16384 MB
-```
+| Memoria RAM |  Mínimo |   Máximo |
+| ----------- | ------: | -------: |
+| 2 GB        | 2048 MB |  4096 MB |
+| 4 GB        | 4096 MB |  8192 MB |
+| 8 GB        | 8192 MB | 16384 MB |
 
 utilizando:
 
@@ -203,6 +195,33 @@ C:\pagefile.sys
 ```
 
 Esta configuración está orientada principalmente a equipos escolares con recursos limitados.
+
+---
+
+## Validación
+
+El script se encuentra en **etapa de pruebas y validación**.
+
+Como parte de su utilización, fue implementado y probado en **aproximadamente 90 netbooks escolares**, obteniendo un funcionamiento correcto durante las implementaciones realizadas.
+
+Las pruebas permitieron validar principalmente:
+
+* Generación de nombres de equipo.
+* Aplicación de la nomenclatura correspondiente.
+* Selección de diferentes tipos de instituciones.
+* Selección de distritos.
+* Identificación del tipo de equipamiento.
+* Cambio del nombre del equipo en Windows.
+* Configuración del archivo de paginación.
+* Reinicio y aplicación de los cambios.
+
+La cantidad indicada es **aproximada**, debido a que corresponde a equipos utilizados durante diferentes implementaciones.
+
+Los resultados corresponden a los equipos y condiciones utilizados durante estas pruebas.
+
+**No se garantiza el mismo comportamiento en todos los modelos de equipos, versiones de Windows o configuraciones de hardware.**
+
+Se recomienda realizar una prueba piloto antes de implementar el script a gran escala en una infraestructura diferente.
 
 ---
 
@@ -234,6 +253,28 @@ H
 ```
 
 El proyecto puede ampliarse posteriormente para contemplar otras Regiones Educativas y sus respectivas nomenclaturas.
+
+---
+
+## Notas
+
+> **Nota 1:** La nomenclatura incluida en esta versión corresponde a la utilizada para la Región Educativa 7 y puede requerir modificaciones para otras Regiones Educativas.
+
+> **Nota 2:** Los valores de configuración y las opciones disponibles dependen de la implementación para la cual fue desarrollado el script.
+
+> **Nota 3:** El script fue probado en aproximadamente 90 netbooks escolares, pero esta validación no implica compatibilidad universal con todos los equipos o versiones de Windows.
+
+> **Nota 4:** Antes de realizar una implementación masiva, se recomienda efectuar una prueba piloto y verificar los resultados.
+
+---
+
+## Estado del proyecto
+
+**Estado:** En pruebas y validación.
+
+La herramienta fue utilizada en aproximadamente **90 netbooks escolares** durante distintas implementaciones.
+
+Se podrán incorporar nuevas pruebas, distritos, instituciones, tipos de equipamiento y ajustes a medida que el proyecto se utilice en diferentes entornos.
 
 ---
 
